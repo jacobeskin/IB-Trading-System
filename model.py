@@ -55,6 +55,6 @@ def NewStop(price,d_data):
 	"""
 	Return adjusted stop or just the original stop
 	"""
-	if (price*(1+d_data[4]))>d_data[-1][2]: return(price*(1+d_data[4]))
+	if (price*(1-d_data[4]))>d_data[-1][2]: return(price*(1-d_data[4]))
 	else: return(d_data[-1][2])
 	
