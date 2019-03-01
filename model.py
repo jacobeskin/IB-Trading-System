@@ -25,7 +25,7 @@ def Position(data,d_data):
 	if d_data[6][0]==0:
 		
 		# Check conditions for buying
-		if (data[4]>d_data[0]) and (d_data[1]>=data[5]): return(1)
+		if (data[4]>d_data[0]) and (d_data[1]<=data[5]): return(1)
 	
 	# If there is a position open	
 	elif d_data[6][0]==1:

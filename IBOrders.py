@@ -58,7 +58,7 @@ def IBOrders(d,q_data,q_msg_o,q_err_o):
 				
 				# If there is data in the queue, go through it and make trades
 				if not q_data.empty():
-				
+		
 					data=q_data.get()      # Get data
 					ticker=data[0].symbol  # tikcer
 					
@@ -70,7 +70,7 @@ def IBOrders(d,q_data,q_msg_o,q_err_o):
 					
 					# If we are going to open a position, check time of day here
 					if trd==1:
-								
+						
 						# Open position
 						log2.info('Placing market order for '+ticker+' with ticktime '+str(data[1])+' and ask '+str(data[3]))
 						order=MarketOrder('BUY',params[0])
@@ -78,9 +78,9 @@ def IBOrders(d,q_data,q_msg_o,q_err_o):
 						trade=ib.placeOrder(data[0],order)
 						
 						# Update model dynamic parameters
-						d[ticker][-1][0]=1                  # Position flag
-						d[ticker][-1][1]=data[4]            # Open price 
-						d[ticker][-1][2]=data[4]*params[1]  # Stop price
+						d[ticker][-1][0]=1                      # Position flag
+						d[ticker][-1][1]=data[4]                # Open price 
+						d[ticker][-1][2]=data[4]*(1-params[1])  # Stop price
 						
 						# Write the updated model dict to JSON for safety
 						_=DataUtilities.ModelOut(d)
@@ -106,13 +106,18 @@ def IBOrders(d,q_data,q_msg_o,q_err_o):
 						# Set trailing stop flg is needed
 						if d[ticker][-1][0] and not d[ticker][-1][3]:
 							d[ticker][-1][3]=model.SetTrail(data[4],d[ticker])
-						
+							
+							# Write the updated model dict to JSON for safety
+							_=DataUtilities.ModelOut(d)
+							
 						# Adjust stop price (trailing stop) if needed
 						if d[ticker][-1][0] and d[ticker][-1][3]:
 							d[ticker][-1][2]=model.NewStop(data[4],d[ticker])
 							
-						# Write the updated model dict to JSON for safety
-						_=DataUtilities.ModelOut(d)
+							# Write the updated model dict to JSON for safety
+							_=DataUtilities.ModelOut(d)
+							
+						
 						
 	
 	except KeyboardInterrupt:

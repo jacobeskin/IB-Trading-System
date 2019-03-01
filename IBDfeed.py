@@ -72,7 +72,7 @@ def IBDfeed(tickers,q_data,q_msg_f,q_err_f):
 					
 					# Get tick 
 					tick=[ib.reqMktData(contract=j,snapshot=True) for j in contract[49*i:min(len(tickers),49+49*i)]]
-					ib.sleep(1) # Wait for it to fill
+					ib.sleep(2) # Wait for it to fill
 					
 					# Loop over all the tickers
 					for k in range(len(tick)):
