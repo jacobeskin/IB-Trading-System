@@ -103,29 +103,29 @@ if __name__=='__main__':
 					_=p_f.terminate()
 					_=time.sleep(1)
 					_=q_msg_f.put('Start')
-					p_f=mp.Process(target=IBDfeed,args=(tckr,q_data,q_msg_f,q_err_f))
+					p_f=mp.Process(target=IBDfeed,args=(tlist,q_data,q_msg_f,q_err_f))
 					_=p_f.start()
 				else:
 					_=time.sleep(1)
 					_=q_msg_f.put('Start')
-					p_f=mp.Process(target=IBDfeed,args=(tckr,q_data,q_msg_f,q_err_f))
+					p_f=mp.Process(target=IBDfeed,args=(tlist,q_data,q_msg_f,q_err_f))
 					_=p_f.start()
 				
 			# Error in ordering, restart 	
 			if not q_err_o.empty():
-				_=q_err_o.get()
+				restart_d=q_err_o.get()
 				logger.warning('Error in order placement')
 				logger.info('Restarting')
 				if (p_o.exitcode is None) and (not p_o.is_alive()):
 					_=p_o.terminate()
 					_=time.sleep(1)
 					_=q_msg_o.put('Start')
-					p_o=mp.Process(target=IBOrders,args=(tckr,q_data,q_msg_o,q_err_o))
+					p_o=mp.Process(target=IBOrders,args=(restart_d,q_data,q_msg_o,q_err_o))
 					_=p_o.start()
 				else:
 					_=time.sleep(1)
 					_=q_msg_o.put('Start')
-					p_o=mp.Process(target=IBOrders,args=(tckr,q_data,q_msg_o,q_err_o))
+					p_o=mp.Process(target=IBOrders,args=(restart_b,q_data,q_msg_o,q_err_o))
 					_=p_o.start()
 	
 	# Controlled exit

@@ -103,6 +103,7 @@ def IBDfeed(tickers,q_data,q_msg_f,q_err_f):
 		log2.info('Controlled disconnection from IB datafeed process')
 	
 	except Exception as e:
+		_=q_err_f.put('Error')
 		ib.disconnect()
 		ib.sleep(1)
 		log2.error('Disconnected by exception IB datafeed process')

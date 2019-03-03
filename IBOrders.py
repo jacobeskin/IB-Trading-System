@@ -126,6 +126,7 @@ def IBOrders(d,q_data,q_msg_o,q_err_o):
 		log2.info('Controlled disconnection from IB ordering process')
 	
 	except Exception as e:
+		_=q_err_o.put(d)
 		ib.disconnect()
 		ib.sleep(1)
 		log2.error('Disconnected by exception IB ordering process')
