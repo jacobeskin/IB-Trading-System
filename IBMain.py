@@ -125,7 +125,7 @@ if __name__=='__main__':
 				else:
 					_=time.sleep(1)
 					_=q_msg_o.put('Start')
-					p_o=mp.Process(target=IBOrders,args=(restart_b,q_data,q_msg_o,q_err_o))
+					p_o=mp.Process(target=IBOrders,args=(restart_d,q_data,q_msg_o,q_err_o))
 					_=p_o.start()
 	
 	# Controlled exit
@@ -146,7 +146,7 @@ if __name__=='__main__':
 		_=q_msg_f.put('Stop')
 		_=q_msg_o.put('Stop')
 		for i in range(15,0,-1):
-			logger2.info(i)
+			logger.info(i)
 			print(i)
 		if (p_f.exitcode is None) and (not p_f.is_alive()):
 			_=p_f.terminate()
