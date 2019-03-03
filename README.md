@@ -23,4 +23,4 @@ d[ticker][-1][2]=model.NewStop(data[4],d[ticker]), i.e. the model has to have a 
 
 No limit orders or stoploss orders are submitted to IB, only market orders, limits and stops are tracked locally.
 
-Updates to README to follow with more detailed descriptions.
+Updates to README to follow with more detailed descriptions. Need to specify in error handling that if connection issue "ConnectionRefusedError: [Errno 10061] Connect call failed" because the platform is not up and running, then no restarting attempts are made.
