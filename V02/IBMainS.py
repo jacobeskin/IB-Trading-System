@@ -38,6 +38,7 @@ if __name__=='__main__':
 				with open('positions.pickle', 'rb') as fp:
 					data=pickle.load(fp)
 				logger.info('Positions data successfully loaded!')
+				tlist=[i[0] for i in data]
 				logger.info('Path to JSON:')
 				input_file=input().split()
 				break
@@ -58,6 +59,10 @@ if __name__=='__main__':
 						logger.info('Ticker data succesfully loaded.')
 						os.remove(input_file[0])
 						file_flg=1
+						tlist=[i[0] for i in data]
+						for i in data:
+							data[i]['position']=0
+							data[i]['trailer']=0
 						break
 					except Exception as e:
 						logger.error('Something went wrong in reading the input JSON.')
@@ -65,11 +70,6 @@ if __name__=='__main__':
 						sys.exit()
 				else: logger.info('File does not exist')
 		else: logger.info('Please give y or n')
-
-	tlist=[i[0] for i in data]
-	for i in data:
-		data[i]['position']=0
-		data[i]['trailer']=0
 
 
 	#---------------------------------------------------------------------------

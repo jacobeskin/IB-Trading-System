@@ -85,7 +85,9 @@ def IBDfeedS(tickers,q_data,q_tlist_n,q_msg_f,q_err_f):
 					#tick=[ib.reqMktData(contract=j,snapshot=False) for j in contract[49*i:min(len(tickers),49+49*i)]]
 					#ib.sleep(2) # Wait for it to fill
 					# For multiple contracts get many elements in tick
-					tick=ib.reqTickers(*contract,regulatorySnapshot=False)
+					log2.info('Getting ticker data.')
+					contracts=contract[49*i:min(len(tickers),49+49*i)]
+					tick=ib.reqTickers(*contracts,regulatorySnapshot=False)
 
 					# Loop over all the tickers
 					for k in range(len(tick)):
@@ -105,8 +107,9 @@ def IBDfeedS(tickers,q_data,q_tlist_n,q_msg_f,q_err_f):
 										tick[k].high,
 										tick[k].low])
 
+					log2.info('Ticker data sent.')
 					# Unsubscribe so as not to go over 100 contract limit
-					_=[ib.cancelMktData(contract=j) for j in contract[49*i:min(len(tickers),49+49*i)]]
+					_=[ib.cancelMktData(contract=j) for j in contracts[49*i:min(len(tickers),49+49*i)]]
 					ib.sleep(1)
 
 	except Exception as e:
