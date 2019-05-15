@@ -8,11 +8,17 @@ from datetime import timezone
 
 def IBOpenData(tickers):
 
+	from ib_insync import * # Bad practice, bad bad practice...soo vitun soo!
+	#import datetime
+	#import time
+	import math as m
+	from datetime import timezone
+
 	try:
 		prices={}
 
 		ib=IB()
-		_=util.logToFile('IBOrders.log',level=20)
+		_=util.logToFile('IBOpenData.log',level=20)
 		_=ib.connect('127.0.0.1', 7497, 3) # Connect to IB
 		ib.sleep(1)
 		_=ib.reqMarketDataType(1) # Real time data
