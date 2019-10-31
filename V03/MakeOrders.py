@@ -76,6 +76,7 @@ def IB_MakeOrders(data_dict):
 				symbol=contracts[k].symbol # Get the ticker symbol again
 				order=MarketOrder(data_dict[symbol][1],data_dict[symbol][0]) # Create the order
 				trade=ib.placeOrder(contracts[k],order)                      # Place the order
+				ib.sleep(1)
 				log2.info('Placing '+data_dict[symbol][1]+' order for '+symbol+' for '+data_dict[symbol][0]+' shares') 
 
 		# If we completed safe and sound

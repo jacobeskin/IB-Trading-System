@@ -60,17 +60,17 @@ def IB_GetData(tickers):
 
 		# In order to avoid too many msgs sent, chunk ticker list up
 		x=m.ceil(len(tickers)/49)
+		data=[]
+		idx=[]
+		columns=['Price', 'Volume']
 
 		for i in range(x):
 
 			log2.info('Getting ticker data.')
 			contracts=contract[49*i:min(len(tickers),49+49*i)]
 			tick=ib.reqTickers(*contracts,regulatorySnapshot=False)
-
+			ib.sleep(1)
 			# Loop over all the tickers
-			data=[]
-			idx=[]
-			columns=['Price', 'Volume']
 			for k in range(len(tick)):
 
 				if tick[k].time!=None: # Serves as a guard for tickers in list that are not in IB
@@ -80,7 +80,7 @@ def IB_GetData(tickers):
 					#time=time.strftime('%Y%m%d%H%M%S')
 
 					# Put data into the data list
-					_=data.append(tick[k].marketPrice(), tick[k].volume)
+					_=data.append([tick[k].marketPrice(), tick[k].volume])
 					
 					# Other possible data if needed in the future
 					#_=q_data.put([tick[k].contract,   # Contract
@@ -97,7 +97,7 @@ def IB_GetData(tickers):
 
 			# Unsubscribe so as not to go over 100 contract limit
 			_=[ib.cancelMktData(contract=j) for j in contracts[49*i:min(len(tickers),49+49*i)]]
-			ib.sleep(1)
+			
 
 		# Construct the dataframe and return
 		data_frame=pd.DataFrame(data,columns=columns, index=idx)
@@ -112,5 +112,4 @@ def IB_GetData(tickers):
 		log2.error('Disconnected by exception from the IB data request process')
 		log2.exception(e)
 		return(0)
-
 
