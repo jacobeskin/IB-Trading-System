@@ -15,8 +15,8 @@ Output:
 # Import stuff 
 import logging
 from ib_insync import * 
-#import datetime
-#import time
+import datetime
+import time
 import math as m
 import pandas as pd
 from datetime import timezone
@@ -75,22 +75,8 @@ def IB_GetData(tickers):
 
 				if tick[k].time!=None: # Serves as a guard for tickers in list that are not in IB
 
-					# Ticker timestamp, if needed in the future.
-					#time=tick[k].time.replace(tzinfo=timezone.utc).astimezone(tz=None)
-					#time=time.strftime('%Y%m%d%H%M%S')
-
 					# Put data into the data list
 					_=data.append([tick[k].marketPrice(), tick[k].volume])
-					
-					# Other possible data if needed in the future
-					#_=q_data.put([tick[k].contract,   # Contract
-					#			time,                 # Timestamp
-					#			tick[k].bid,          # well guess the rest...
-					#			tick[k].ask,
-					#			tick[k].marketPrice(),
-					#			tick[k].volume,
-					#			tick[k].high,
-					#			tick[k].low])
 
 					# Symbol into the index list
 					_=idx.append(contracts[k].symbol)
