@@ -2,14 +2,15 @@
 Get all open positions.
 
 Returns a dictionary where key is the ticker symbol and value is the position value.
-In case no open positions, return 0.
+In case no open positions, return 0. For specific positions to the current market session,
+you can also use GetTrades.py so as to not include positions held from previous sessions.
 """
 
 # Import stuff 
 import logging
 from ib_insync import * 
 
-def IB_Get_Positions():
+def IB_GetPositions():
 
 	# Setup second logger-------------------------------------------------------
 	log2=logging.getLogger('IB_Get_Positions')
@@ -44,7 +45,7 @@ def IB_Get_Positions():
 
 		# Loop through positions
 		for i in range(len(portfolio)):
-			data_dict[portfolio[i].contract.symbol] = portfolio[i].unrealizedPNL
+			data_dict[portfolio[i].contract.symbol] = portfolio[i].marketPrice
 
 		ib.disconnect()
 		ib.sleep(1)
