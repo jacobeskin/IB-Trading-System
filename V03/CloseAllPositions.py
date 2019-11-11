@@ -41,6 +41,9 @@ def IB_CloseAllPositions():
 		contracts=[Stock(portfolio[i].contract.symbol,'SMART','USD') for i in range(len(portfolio))]
 		_=ib.qualifyContracts(*contracts)
 
+		# Return list of symbols for closed positions.
+		return_list=[]
+
 		# Send close orders
 		for i in range(len(portfolio)):
 
@@ -51,21 +54,20 @@ def IB_CloseAllPositions():
 			else: continue
 
 			symbol=portfolio[i].contract.symbol
+			if symbol not in ['GOOG','AAPL','FISV'] : continue
 			contract=contracts[i]
 
-			order=MarketOrder(side,position)
+			order=MarketOrder(side,abs(position))
 			_=ib.placeOrder(contract,order)
 
-			log2.info('Placing '+side+' order for '+symbol+' for '+str(position)+' shares')
+			return_list.append('symbol')
 
-		# Request trades and get the closing prices
-		#close_prices={}
-		#trades=ib.trades()
+			log2.info('Placing '+side+' order for '+symbol+' for '+str(position)+' shares')
 
 		ib.disconnect()
 		ib.sleep(1)
 		log2.info('Position closing orders sent.')
-		return(1)
+		return(return_list)
 
 
 		
