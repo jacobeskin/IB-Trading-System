@@ -19,7 +19,7 @@ Input for limit on open order, note this will be submitted at market open:
 
 Output:
 
-- 1 in case of success
+- List of symbols that orders were commited for (market order) or 1 for LOO
 - 0 in case of an actual error
 """
 

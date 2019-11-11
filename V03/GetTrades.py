@@ -1,6 +1,9 @@
 """
 Get trades. Either action == 'BUY' or action == 'SELL' meanig get either buys or sells.
 Only for the current trading sessions/day.
+
+Return a dictionary where ticker symbol is key and value is the executed price.
+Assumes that one trade of specified action is done per trading session (for now).
 """
 
 # Import stuff 

@@ -1,5 +1,6 @@
 """
 Close all open positions. 
+Returns list of symbols that positions were closed for.
 """
 
 # Import stuff 
