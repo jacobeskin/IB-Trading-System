@@ -43,10 +43,10 @@ def IB_GetTrades(action):
 		# Loop through positions
 		for i in range(len(trades)):
 			if (trades[i].orderStatus.status=='Filled') and (trades[i].order.action==action):
-				data_dict[str(i)] = trades[i].fills[0].execution.avgPrice
+				data_dict[trades[i].contract.symbol] = trades[i].fills[0].execution.avgPrice
 
 		ib.disconnect()
-		ib.sleep(1)
+		ib.sleep(2)
 		log2.info('Open positions returned.')
 		return(data_dict)
 

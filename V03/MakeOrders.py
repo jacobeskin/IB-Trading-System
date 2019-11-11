@@ -86,7 +86,7 @@ def IB_MarketOrders(data_dict):
 				symbol=contracts[k].symbol # Get the ticker symbol again
 				order=MarketOrder(data_dict[symbol][1],data_dict[symbol][0]) # Create the order
 				trade=ib.placeOrder(contracts[k],order)                      # Place the order
-				return_list.append('symbol')
+				return_list.append(symbol)
 				ib.sleep(1)
 				log2.info('Placing '+str(data_dict[symbol][1])+' order for '+symbol+' for '+str(data_dict[symbol][0])+' shares') 
 
@@ -94,7 +94,7 @@ def IB_MarketOrders(data_dict):
 		log2.info('All orders placed.')
 		ib.disconnect()
 		ib.sleep(1)
-		return(1)
+		return(return_list)
 
 	except Exception as e:
 		ib.disconnect()

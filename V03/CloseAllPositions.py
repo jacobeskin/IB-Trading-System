@@ -60,7 +60,7 @@ def IB_CloseAllPositions():
 			order=MarketOrder(side,abs(position))
 			_=ib.placeOrder(contract,order)
 
-			return_list.append('symbol')
+			return_list.append(symbol)
 
 			log2.info('Placing '+side+' order for '+symbol+' for '+str(position)+' shares')
 
