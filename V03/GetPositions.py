@@ -45,7 +45,7 @@ def IB_GetPositions():
 
 		# Loop through positions
 		for i in range(len(portfolio)):
-			data_dict[portfolio[i].contract.symbol] = portfolio[i].marketPrice
+			data_dict[portfolio[i].contract.symbol] = portfolio[i].averageCost
 
 		ib.disconnect()
 		ib.sleep(1)
